@@ -1,3 +1,3 @@
 # 03013 啟用技能清單
 
-- `yocto-bitbake-troubleshooter`: Yocto BitBake 編譯錯誤診斷器
+目前未啟用任何自訂 Skill。
