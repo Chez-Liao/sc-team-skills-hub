@@ -1,3 +1,3 @@
 # tester 啟用技能清單
 
-目前未啟用任何自訂 Skill。
+- `yocto-bitbake-troubleshooter`: Yocto BitBake 編譯錯誤診斷器
