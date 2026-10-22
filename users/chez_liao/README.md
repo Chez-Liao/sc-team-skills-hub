@@ -1,3 +1,4 @@
-# chez_liao 啟用技能清單 (Version: 1.0.1792650562)
+# chez_liao 啟用技能清單 (Version: 1.0.1792650612)
 
+- `bsp-rdk-code-trace`: bsp-rdk-code-trace
 - `how-to-use-sc-team-skills`: How to Use SC Team Skills
