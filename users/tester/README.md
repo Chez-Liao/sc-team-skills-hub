@@ -1,3 +1,3 @@
-# tester 啟用技能清單 (Version: 1.0.1792643347)
+# tester 啟用技能清單 (Version: 1.0.1792643372)
 
-- `bsp-rdk-code-trace`: code_trace_skill
+目前未啟用任何自訂 Skill。
