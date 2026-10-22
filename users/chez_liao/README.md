@@ -1,3 +1,3 @@
-# chez_liao 啟用技能清單 (Version: 1.0.1792643200)
+# chez_liao 啟用技能清單 (Version: 1.0.1792643369)
 
-- `bsp-rdk-code-trace`: code_trace_skill
+目前未啟用任何自訂 Skill。
