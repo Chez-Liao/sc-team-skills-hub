@@ -1,3 +1,3 @@
-# chez_liao 啟用技能清單 (Version: 1.0.1792643561)
+# chez_liao 啟用技能清單 (Version: 1.0.1792645018)
 
-目前未啟用任何自訂 Skill。
+- `how-to-use-sc-team-skills`: How to Use SC Team Skills
