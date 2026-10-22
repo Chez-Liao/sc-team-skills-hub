@@ -1,5 +1,9 @@
 ---
 name: bsp-rdk-code-trace
+description: V2
+---
+
+name: bsp-rdk-code-trace 
 description: Ground every BSP / RDK-B code-trace answer in real DUT console evidence and a verified source path before drawing conclusions. Use whenever investigating boot failures, CCSP/RDK-B component crashes or misbehavior, kernel/u-boot/secure-boot issues, EPON/XGS-PON/DPoE link problems, or any "why does the code do X" question on Broadcom BCM68575-based gateways (Comcast XF10/XER10). Trigger this any time an answer would otherwise be based on how BSP code "usually" behaves rather than on this specific build's console log and this specific board config's compiled code path.
 ---
  
