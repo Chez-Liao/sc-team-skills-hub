@@ -2,7 +2,7 @@
 name: docsis-pnm-interpret
 description: 判讀 DOCSIS／PNM 的 SNMP、RDK data model、RF 與計數器資料，核對單位、instance、平台角色與時間差，輸出有證據的診斷線索。適用於既有輸出的分析；不以單一數值宣告根因或完整認證通過。
 metadata:
-  version: 1.0.0
+  version: 1.0.1
 ---
 
 # DOCSIS／PNM 數據判讀與 RDK 對照
@@ -40,6 +40,14 @@ SNMP table index、ifIndex、channel ID、RDK instance number 是不同識別；
 | dBmV 與 dBm | 在 75 Ω、相同量測定義下，dBm = dBmV − 約 48.75 | 不套用到不同阻抗、PSD 或不同積分頻寬的比較 |
 
 RDK 可能已做單位轉換、四捨五入、快取或聚合。`dmcli eRT getv` 僅作已確認 path 的查詢示例；先查設備可用 namespace／component，不掃不存在的路徑。比較表必須並列 raw OID、SNMP raw／unit、RDK path／raw／unit、時間及轉換方式。
+
+### 路徑與證據欄位
+
+- 完整 RDK path 只能引用本案輸入、實際設備查詢或已核對的目標版本文件，並標示來源。只有 instance number、channel ID 或扁平 JSON 欄位時，`rdk_path` 寫 `not_provided`；不要由常見產品、TR-181 命名或記憶拼出 namespace，即使寫成「例如」或下一步建議也不生成未核實的具體 path。
+- 缺路徑時以「下行通道資料模型的功率欄位（完整路徑待查）」等描述性名稱交接，請操作員提供設備實際 namespace／component 的只讀列舉或相符版本定義。不能把描述性名稱放入可執行命令。
+- 輸出前檢查全文（包含下一步、括號與「例如」）：凡本案未提供且未實際核實的路徑或 namespace 片段，都改成描述性名稱。禁止用 `Device.` 開頭的猜測片段、萬用字元或省略號暗示可能路徑；只要求操作員提供完整列舉結果即可。已由來源提供的完整 path 可原樣引用並標示 `provided`，但不升格為本次設備查詢成功。
+- 表格逐欄區分 `provided`（輸入提供）、`observed`（本次實際查詢）、`derived`（附計算／映射依據）、`not_provided`（沒有來源）及 `not_computed`（需要計算但未執行）。本案沒有提供或核對的 OID、build、時間、型別、雜湊，不得用看似合理的值或「已驗證」補齊。
+- 用 channel／frequency 建立對應只能支持本案資料的映射，不能證明完整 RDK path 存在，也不能證明累計 counter 與 RF 欄位屬同一個未標明的通道。
 
 ## 4. 計數器與趨勢
 
