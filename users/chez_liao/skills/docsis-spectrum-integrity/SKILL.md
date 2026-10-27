@@ -2,7 +2,7 @@
 name: docsis-spectrum-integrity
 description: 檢查 DOCSIS RF 頻譜的真實來源、新鮮度、診斷模式、binary 解碼、單位、頻率幾何及 Hold 聚合，判斷資料是否可供 ingress 分析或 AI 使用。適用於既有 capture 與採集流程審查；不自行改動 RF 或診斷設定。
 metadata:
-  version: 1.0.0
+  version: 1.0.1
 ---
 
 # DOCSIS RF 頻譜資料可信度
@@ -42,18 +42,32 @@ metadata:
 
 ## 5. 輸出與處理結果
 
+### 證據欄位規則
+
+- 每個欄位標示 `provided`（輸入提供）、`observed`（本次實際量測／查詢）、`derived`（附計算與依據）、`not_provided` 或 `not_computed`。檔案能讀取不等於來源已驗證；不得以 `verified_*` 或其他文字取代未提供的證據。
+- `raw_file_hash` 使用 `{algorithm, value, status, source}`。沒有實際 digest 時 `value=null`，依情況寫 `not_provided` 或 `not_computed`；只有本次確實對指定原始檔 bytes 執行計算並取得 digest 才可標 `computed`。若引用輸入 manifest，標 `provided` 及其來源，不能聲稱自行計算或獨立核驗。`hash_changed=true` 不是 digest；對重建 hex bytes 計算的 hash 也不是原始檔案 hash。
+- 有 digest 時，`value` 必須逐字完整保留來源 digest；SHA-256 應為完整 64 個十六進位字元。不要截短、遮成前綴／後綴或使用省略號，也不因回答長度限制而縮寫校驗值。輸入 digest 缺字、縮寫或格式不符時記為 invalid／incomplete，不自行補字；它不能充當可用的校驗值。未獨立核驗的完整值仍只標 `provided`，保留其來源。
+- 未提供的 provider、format version、build、阻抗、segment count、mode-read timestamps 等欄位保留未知。不可因資料來自 DOCSIS、只有一段 payload 或有 sweep 時間，就補成 75 Ω、單 segment 或已觀測到 mode-read times。使用原子綁定欄位時註明它是輸入聲明還是本次觀測，沒有查詢就不寫成自己已實測。
+- `segments` 沒有明示的 segment count／index 或等價結構證據時，固定輸出 `null / not_provided`；單一 payload 不能推導成 1，也不以 `derived` 標籤包裝這個假設。不要輸出全域 `validation_errors` 欄位；格式檢查只使用 `format_errors`，其餘未驗證資訊列入各自的 gaps。
+- 可指派報告用代碼，但標為 `analyst_assigned`；capture A／B／C 不代表三台設備。capture generation 不直接冒充未提供的 capture ID，completion time 不直接冒充未提供的 capture start。
+- 輸出前逐欄回查來源鍵。若輸入沒有 `capture_start`，該欄固定為 `null / not_provided`；第一個 sweep 的 completion=0 也不例外。另列 `sweep_completion_range` 描述最早／最晚完成時間及其 derived 覆蓋長度。若只有完成時間而沒有明示 capture end，`capture_end` 也保持未知。不可為了填滿範本把「推導的完成時間範圍」改標成「輸入提供的採集起訖」。
+- 將 `format_errors`、`source_gaps`、`timing_gaps`、`unverified_metadata` 分開列出。格式未發現錯誤可寫 `format_errors=[]`，但不能因格式正常就寫全域 `validation_errors: none` 或「全部已驗證」。推導的欄位要能追溯原始輸入，假設不得當成 observed。
+- 不擴張量測範圍：沒有完整且不重疊的 bin 積分頻寬／覆蓋證據時，不把所列 bin 功率和稱為全頻段總功率；缺 first-bin／center 時只能計算已由契約確定的 spacing，不能捏造絕對頻率軸。缺少來源證據不妨礙交付有限的離線解碼結果，但必須限制接受用途。
+
 逐 capture 輸出以下欄位；原始證據留在受控位置，對外使用一致代碼並去除敏感端點／識別：
 
 ```text
 device_alias / firmware_build / capture_id
-capture_start / capture_end / clock_basis
+capture_start (explicit source or null) / capture_end (explicit source or null) / clock_basis
+sweep_completion_range (derived when available; not capture start/end)
 provider / format_version / raw_file_hash
 source_class: live | synthetic | cached | unknown
 source_evidence / mode_read_times / race_gap
 raw_encoding / normalized_unit / impedance_reference
-frequency_geometry / bins / segments / validation_errors
+frequency_geometry / bins / segments (explicit source or null)
 aggregation / sample_count / effective_sweep_interval / window_coverage
 transforms_or_repairs
+format_errors / source_gaps / timing_gaps / unverified_metadata
 result: accepted_for_stated_use | rejected | incomplete
 intended_use / reasons / remaining_checks
 ```
