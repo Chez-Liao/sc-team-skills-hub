@@ -1,6 +1,5 @@
-# chez_liao 啟用技能清單 (Version: 1.0.1793157474)
+# chez_liao 啟用技能清單 (Version: 1.0.1793157792)
 
-- `bsp-rdk-code-trace`: bsp-rdk-code-trace
 - `c-cpp-review`: C/C++ Patch Review
 - `docsis-cm-evidence-collect`: DOCSIS CM 證據採集
 - `docsis-pnm-interpret`: DOCSIS／PNM 數據判讀與 RDK 對照
