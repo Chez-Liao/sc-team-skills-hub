@@ -1,14 +1,14 @@
 ---
-name: targa
-description: Internal Targa project knowledge, retrieved live by topic from the company Skill Hub.
+name: internal-security
+description: Internal Security project knowledge, retrieved live by topic from the company Skill Hub.
 ---
 
-# Targa Internal Skill
+# Security Internal Skill
 
 **Visibility: INTERNAL** - full content and history are not stored in this public repository.
 
 1. Call `get_internal_skill` from `sc-internal-skills` with `skill_id` set to
-   `targa` and omit `topic` to retrieve the current Topic Catalog.
+   `security` and omit `topic` to retrieve the current Topic Catalog.
 2. Select the topic or topics that best match the user's request.
 3. Call `get_internal_skill` again for each selected `topic`.
 4. Follow the returned topic content as the authoritative latest workflow.

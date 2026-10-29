@@ -1,5 +1,5 @@
 ---
-name: bimmer
+name: internal-bimmer
 description: Internal Bimmer project knowledge, retrieved live by topic from the company Skill Hub.
 ---
 
