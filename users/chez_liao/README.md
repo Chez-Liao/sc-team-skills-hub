@@ -1,6 +1,7 @@
-# chez_liao 啟用技能清單 (Version: 1.0.1793340509)
+# chez_liao 啟用技能清單 (Version: 1.0.1793340995)
 
 - `c-cpp-review`: C/C++ Patch Review
+- `code-review-tracking`: Code Review 任務追蹤
 - `docsis-cm-evidence-collect`: DOCSIS CM 證據採集
 - `docsis-pnm-interpret`: DOCSIS／PNM 數據判讀與 RDK 對照
 - `docsis-spectrum-integrity`: DOCSIS RF 頻譜資料可信度
