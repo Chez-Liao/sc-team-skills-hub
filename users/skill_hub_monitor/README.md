@@ -1,6 +1,7 @@
-# skill_hub_monitor 啟用技能清單 (Version: 1.0.1793340806)
+# skill_hub_monitor 啟用技能清單 (Version: 1.0.1793340809)
 
 - `c-cpp-review`: C/C++ Patch Review
+- `code-review-tracking`: Code Review 任務追蹤
 - `how-to-use-sc-team-skills`: How to Use SC Team Skills
 - `labbridge-device-booking`: LabBridge 設備查詢與預約
 - `labbridge-test-report`: LabBridge 測試與報告
