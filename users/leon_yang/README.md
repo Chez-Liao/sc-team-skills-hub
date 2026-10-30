@@ -1,5 +1,6 @@
-# leon_yang 啟用技能清單 (Version: 1.0.1793343012)
+# leon_yang 啟用技能清單 (Version: 1.0.1793343960)
 
+- `c-cpp-review`: C/C++ Patch Review
 - `how-to-use-sc-team-skills`: How to Use SC Team Skills
 - `internal-general`: General (INTERNAL topics, always available)
 - `internal-networking`: Networking (INTERNAL topics, always available)
