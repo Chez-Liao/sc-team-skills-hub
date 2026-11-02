@@ -1,6 +1,7 @@
-# jimmy_wang 啟用技能清單 (Version: 1.0.1793606558)
+# jimmy_wang 啟用技能清單 (Version: 1.0.1793611422)
 
 - `how-to-use-sc-team-skills`: How to Use SC Team Skills
+- `mt-code`: Jenkins build MT code / release bundle
 - `internal-general`: General (INTERNAL topics, always available)
 - `internal-networking`: Networking (INTERNAL topics, always available)
 - `internal-security`: Security (INTERNAL topics, always available)
