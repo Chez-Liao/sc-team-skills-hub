@@ -1,6 +1,5 @@
-# allen_ma 啟用技能清單 (Version: 1.0.1793341603)
+# allen_ma 啟用技能清單 (Version: 1.0.1794210721)
 
-- `code-review-tracking`: Code Review 任務追蹤
 - `how-to-use-sc-team-skills`: How to Use SC Team Skills
 - `internal-general`: General (INTERNAL topics, always available)
 - `internal-networking`: Networking (INTERNAL topics, always available)
