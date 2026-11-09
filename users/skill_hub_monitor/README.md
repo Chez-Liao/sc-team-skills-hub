@@ -1,10 +1,9 @@
-# skill_hub_monitor 啟用技能清單 (Version: 1.0.1794210728)
+# skill_hub_monitor 啟用技能清單 (Version: 1.0.1794211591)
 
 - `c-cpp-review`: C/C++ Patch Review
 - `how-to-use-sc-team-skills`: How to Use SC Team Skills
-- `internal-general`: General (INTERNAL topics, always available)
-- `internal-networking`: Networking (INTERNAL topics, always available)
-- `internal-security`: Security (INTERNAL topics, always available)
-- `internal-hardware`: Hardware (INTERNAL topics, always available)
-- `internal-targa`: Targa (INTERNAL topics, always available)
-- `internal-bimmer`: Bimmer (INTERNAL topics, always available)
+- `internal-general`: Internal General knowledge (private connection required)
+- `internal-networking`: Internal Networking knowledge (private connection required)
+- `internal-security`: Internal Security knowledge (private connection required)
+- `internal-hardware`: Internal Hardware knowledge (private connection required)
+- `internal-projects`: Internal Project knowledge (private connection required)
