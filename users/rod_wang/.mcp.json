@@ -1,8 +1,0 @@
-{
-  "mcpServers": {
-    "sc-internal-skills": {
-      "type": "streamable-http",
-      "url": "http://10.1.2.68:8099/mcp/internal-skills"
-    }
-  }
-}
