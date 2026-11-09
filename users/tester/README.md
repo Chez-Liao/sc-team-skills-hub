@@ -1,3 +1,7 @@
-# tester 啟用技能清單 (Version: 1.0.1792643372)
+# tester 啟用技能清單 (Version: 1.0.1794211599)
 
-目前未啟用任何自訂 Skill。
+- `internal-general`: Internal General knowledge (private connection required)
+- `internal-networking`: Internal Networking knowledge (private connection required)
+- `internal-security`: Internal Security knowledge (private connection required)
+- `internal-hardware`: Internal Hardware knowledge (private connection required)
+- `internal-projects`: Internal Project knowledge (private connection required)
