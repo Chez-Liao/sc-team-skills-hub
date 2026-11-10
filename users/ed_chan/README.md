@@ -1,4 +1,4 @@
-# ed_chan 啟用技能清單 (Version: 1.0.1794218833)
+# ed_chan 啟用技能清單 (Version: 1.0.1794278772)
 
 - `how-to-use-sc-team-skills`: How to Use SC Team Skills
 - `internal-general`: Internal General knowledge (Personal Plugin MCP included)
