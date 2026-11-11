@@ -1,4 +1,4 @@
-# yihua_liang 啟用技能清單 (Version: 1.0.1794362250)
+# yihua_liang 啟用技能清單 (Version: 1.0.1794378597)
 
 - `c-cpp-review`: C/C++ Patch Review
 - `docsis-cm-evidence-collect`: DOCSIS CM 證據採集
@@ -9,4 +9,6 @@
 - `internal-networking`: Internal Networking knowledge (Personal Plugin MCP included)
 - `internal-security`: Internal Security knowledge (Personal Plugin MCP included)
 - `internal-hardware`: Internal Hardware knowledge (Personal Plugin MCP included)
+- `internal-targa`: Internal Targa knowledge (Personal Plugin MCP included)
+- `internal-bimmer`: Internal Bimmer knowledge (Personal Plugin MCP included)
 - `internal-projects`: Internal Project knowledge (Personal Plugin MCP included)
