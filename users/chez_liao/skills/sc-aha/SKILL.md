@@ -1,235 +1,124 @@
 ---
-name: aha
+name: sc-aha
 description: >-
-  Turn any professional or technical knowledge into a vivid, interactive, animated
-  explanation that a non-specialist can grasp immediately. Use whenever the user asks
-  to "explain", "visualize", "animate", "make a diagram", "walk me through", "show how
-  X works", or wants to convert a spec / design doc / concept / algorithm into an
-  interactive explainer. Produces self-contained, offline-first, dependency-free
-  HTML/SVG artifacts with step controls, live inputs, hover inspection, semantic color,
-  and story-driven (scene/beat) animation. Not for business reports or statistical
-  dashboards.
+  Turn any complex technical knowledge, architecture, protocol, or firmware mechanism
+  into a vivid, highly legible, interactive engineering explainer. Optimized for human
+  engineers and non-specialists. Produces clean, professional, white/light-themed
+  engineering documents (Stripe/Cloudflare/Apple tech-spec aesthetic) with zero-overlap
+  SVG diagrams, comfortable typography, hover inspection, step controls, and live interactive
+  sandboxes. Strict anti-occlusion and offline-first standards.
 ---
 
-# Aha — 把專業知識變成「一看就懂」的互動說明
+# Aha — 把專業工程知識轉化為清晰易讀的互動說明
 
-一套方法論 skill：把抽象技術、演算法、協定、流程、架構，轉成生動、可互動、帶有意義動畫的說明，
-讓**不懂細節的讀者也能瞬間理解**。
-
-核心信念：**互動圖本身就是說明，不是說明的插圖。動畫要引導注意力，不是讓方塊為了裝飾而動。**
+一套專門為**非該領域專家或初階工程師**打造的技術視覺化與概念解析方法論。
+核心目標：**「不靠死記名詞，透過直覺互動與清晰排版，5 分鐘內看懂底層真相。」**
 
 ---
 
-## 1. 什麼時候用 / 不用
+## 1. 核心視覺與排版規範 (Design & Typography Overhaul)
 
-**用：**
-- 「解釋 X 怎麼運作」「畫個圖」「做成動畫」「帶我走一遍」
-- 把 spec / 設計文件 / 白皮書，轉成可探索的互動頁
-- 演算法、加密、協定、資料結構、狀態機、資料流、生命週期、架構、因果關係
+### 1.1 摒棄「黑底 AI 玩具感」，轉向「頂級白底專業工程手冊風格」
+- ❌ **嚴禁預設純黑/深藍發光底色（如 `#0B0F19`）**：深色霓虹主題容易產生廉價 AI 生成感，且在長篇文字閱讀時容易產生視覺疲勞。
+- ✅ **全面採用專業工程白底/淺灰風格（Stripe / Cloudflare / Apple Developer 規格）**：
+  - **頁面底色**：乾淨純白 `#FFFFFF`，搭配極淺工程灰底 `#F8FAFC` 作為區塊與畫布襯底。
+  - **邊框與格線**：高質感工程淺灰線條 `#E2E8F0` 或 `#CBD5E1`，線寬 `1px` 到 `1.5px`。
+  - **文字主色**：深灰墨黑 `#0F172A`（Slate-900，提供極致銳利的閱讀對比度，嚴禁使用刺眼純黑 `#000000`）。
+  - **說明輔助色**：沉穩灰 `#475569`（Slate-600）與 `#64748B`。
 
-**不用：**
-- 商業報表、統計圖表（是 chart，不是 explainer）
-- 一句話就講得清的事（文字就夠）
-- 讀者已懂、只是為了炫（不硬做動畫）
+### 1.2 防遮擋與排版安全鐵律 (Strict Anti-Occlusion & Overflow Standards)
+- **SVG 原生文字不具備自動換行能力（根因預警）**：
+  - SVG 的 `<text>` 標籤若無特定處理，遇到長文字絕對會沿著 X 軸無限延伸，穿透卡片邊界被右側截斷！
+  - **核心解法 1（多行陣列模式）**：卡片渲染函數必須原生支援 `lines: ["第一行...", "第二行..."]`，每行獨立計算 y 軸增量（字級 12.5px 時建議行距 `idx * 20px ~ 22px`）。
+  - **核心解法 2（自動估算與語意拆行）**：若傳入單一長字串 `sub`，必須依據卡片可用寬度（`width - 32px padding`）計算字元容量。中文每字約佔 13px，超過容量必須自動斷句為多行，或改用 `foreignObject` 包裹 HTML 容器進行 `word-break: break-word`。
+- **元件間距與通道走線**：
+  - SVG 方塊與節點內部必須預留充足 Padding（水平至少 16px，垂直至少 14px）。
+  - 子卡片（Nested Box）與父容器邊界的間距不得小於 14px，高度必須為多行文字留出動態擴充空間（每增加一行文字，高度 `h` 至少增加 24px）。
+  - 箭頭連接線（Connectors）必須沿著元件間隔的「空白通道」走，嚴禁橫穿任何文字、卡片或標籤中心。
+- **字體層次與極致易讀性**：
+  - **章節大標題**：`22px ~ 26px`，`font-weight: 800`，深色墨黑 `#0F172A`。
+  - **正文說明文字**：**嚴禁小於 14.5px**，建議主內文設定為 **`15.5px ~ 16px`**，行高（`line-height`）維持舒適的 `1.8 ~ 1.85`。
+  - **圖表節點標題**：`14px ~ 15px`，`font-weight: 700`；節點次要說明與內文不低於 `12.5px`。
+  - **二進制 / Hex / Offset 標記**：統一使用清晰等寬字型（`ui-monospace, Consolas, Menlo`），字級 `12px ~ 13px`，搭配淺黃/淺灰膠囊底襯。
 
----
+### 1.3 專業工程語意配色表 (Light Theme Semantics)
 
-## 2. 第一原則：The Aha Moment（頓悟瞬間）
-
-**每個視覺化必須有一個「單一互動/動畫」讓觀眾說出「啊哈，我懂了」。寫任何 code 之前先找出它。**
-
-- 對稱加密：看到「明文 ⊕ 金鑰 = 密文，再 ⊕ 同一把 = 還原」
-- 區塊鏈接加密：看到「上一塊密文回饋進下一塊」→ 了解「改一塊會連鎖」
-- 雜湊：看到「改 1 個 bit → 一半輸出翻轉」→ 雪崩效應
-
-找不到這個瞬間 = 還沒想清楚要教什麼。先回去想，不要開始畫。
-
----
-
-## 3. 格式決策（在設計之前，先決定格式）
-
-> 格式是「決策」，不是「設計」。選錯格式比任何配色問題都更浪費時間。
-
-| 需求 | 格式 |
-|---|---|
-| 演算法/流程/狀態機、要互動、要動畫 | 自含 HTML + 內嵌 SVG（最靈活：可縮放、可嵌入、可改） |
-| 架構/拓撲/流程圖，要可 diff、跟 code 走 | Mermaid（文字即圖，PR 可 diff、隨 code 更新） |
-| 資料本身是重點、要圖表編碼與互動 | d3 / Vega-Lite |
-| 空間/立體概念，平面圖講不清 | 3D / isometric |
-| 一次性靜態圖、要精準排版 | 純 SVG |
-
-預設選 **自含 HTML + 內嵌 SVG**：離線、零依賴、`file://` 可開、能縮放。
+| 語意角色 | 推薦色彩 | 淺底背景色 (10%~15% Opacity) | 適用對象 |
+|---|---|---|---|
+| **明文 / 輸入 (Input)** | `#0284C7` (Sky-600) | `#E0F2FE` (Sky-100) | 原始程式碼、明文 Device Tree、輸入資料 |
+| **金鑰 / KEK (Secret)** | `#D97706` (Amber-600) | `#FEF3C7` (Amber-100) | a2k3、AES-256 密鑰、DEK、加密參數 |
+| **密文 / 輸出 (Cipher)** | `#059669` (Emerald-600) | `#D1FAE5` (Emerald-100) | 密文映像檔、rootfs.enc、FITE 密文塊 |
+| **簽章 / 信任根 (Sign)** | `#7C3AED` (Purple-600) | `#EDE9FE` (Purple-100) | r4k1、RSA 數位簽章、Certificate、ROT |
+| **硬體根 / 警告 (Root/Fail)**| `#E11D48` (Rose-600) | `#FFE4E6` (Rose-100) | CPU OTP、HUK、驗證失敗、Kernel Panic |
+| **結構容器 / 分區** | `#64748B` (Slate-500) | `#F1F5F9` (Slate-100) | eMMC 分割區、RPMB SKS 庫、SoC 邊界 |
 
 ---
 
-## 4. 工作流程（照順序）
+## 2. 知識傳遞原則：The "Aha Moment"（頓悟瞬間）
 
-### Step 1：偵測主題結構
-`process / timeline / comparison / hierarchy / architecture / algorithm / data-flow / lifecycle`
+每個技術主題必須鎖定**一個最核心的頓悟點**，寫碼前先定位：
+- **為什麼需要兩層加密？** ➔ 看見「根金鑰 a2k3 永遠不出門，每版隨機拋棄 DEK」的隔離保護。
+- **為什麼要簽兩次？** ➔ 看到「第一次防明文邏輯被改，第二次讓開機在不解密前提下直接先篩掉惡意密文」。
+- **為什麼換 CPU 會開機失敗？** ➔ 看到「CPU HUK 變更導致 eMMC RPMB 認證 HMAC 不符，金鑰庫無法開啟」。
 
-### Step 2：分解成 Stage（寫碼前必做）
+---
+
+## 3. 版面架構：雙欄專業技術手冊佈局
+
 ```
-概念 → [Stage 1] → [Stage 2] → ... → [Stage N]
-          ↓             ↓                ↓
-        可視輸入/輸出   可視輸入/輸出     可視輸入/輸出
+┌────────────────────────────────────────────────────────────────────────┐
+│ HEADER: 專案標題 · 專業徽章 · 顏色語意圖例 (Legend)                      │
+├────────────────────────────────────────────────────────────────────────┤
+│ NAV: 模組切換標籤 (Tab Navigation, 淺灰底 + 圓角選中態)                  │
+├──────────────────────────────┬─────────────────────────────────────────┤
+│ 左欄：教材與原理解析 (35% ~ 38%)│ 右欄：高精度 SVG 互動實驗室 (62% ~ 65%)    │
+│ • 當前階段編號與標題         │ • 大畫布 (960x560 以上)，元素間距寬鬆    │
+│ • Aha 頓悟核心提示框         │ • 容器 ➔ 節點 ➔ 連線 錯落有致，嚴禁穿線 │
+│ • 易讀正文 (15px/1.8行高)    │ • 互動式元件：可點擊、可切換狀態         │
+│ • 關鍵術語點擊彈出說明       │ • 懸停高亮：主動突顯關聯路徑             │
+│ • 底部控制：上一步/下一步    ├─────────────────────────────────────────┤
+│                              │ 底部 HUD：浮動節點檢測儀 (Byte Offset)   │
+└──────────────────────────────┴─────────────────────────────────────────┘
 ```
-每個 stage 要有清楚可見的輸入/輸出、可用動畫呈現、與前一 stage 有可見的資料流線。
-
-### Step 3：選最小必要模態
-文字（抽象）、圖（結構/關係）、動畫（時序/變化）、互動（流程/系統/模型）。只挑能幫助理解的。
-
-### Step 4：疊加互動模型（能加都加）
-1. **Step 控制（主導航）**：播放/暫停/上一步/下一步/速度 + 「Step 3 of 7」指示。
-2. **即時輸入欄位**：讀者輸入自己的資料，畫面即時反應（debounce）。
-3. **Hover/點擊檢查**：滑到資料塊/線/中間值 → raw data、hex、解釋；點擊可 pin。
-4. **並排對比**：有變體時同步 step 並排。
-
-### Step 5：語意動畫（§5）
-### Step 6：補語境與「為什麼」（每步 1–2 句白話 + Why it matters + Edge case 按鈕）
 
 ---
 
-## 5. 語意動畫 — 鐵律
+## 4. 動態與互動鐵律 (Interactive & Motion Standards)
 
-**動畫只允許 6 種語意，其餘一律靜態：**
-`flow`（流動）、`cause`（因果）、`sequence`（先後）、`transformation`（轉換）、`grouping`（歸屬）、`state-change`（狀態改變）。
-
-**規則：**
-1. 動畫不表達上述任何一種 → **刪掉，用靜態圖**。
-2. 互動優先、絕不 free-loop：播一次 → 定格。
-3. 尊重 `prefers-reduced-motion`：降級成靜態最終態。
-4. 時長：微互動 150–400ms、完整轉換 ≤ 1s、大位移更長；一律 `ease-in-out`。
-5. Staggered reveals：資料塊 30–50ms 錯開出現。
-6. **Transform, don't replace**：能「變形」就不要「淡出再淡入」，保持視覺連續性、顯示前後關係。
-
----
-
-## 6. 敘事模式（挑一個，或混合）
-
-1. **Mystery → Investigation → Resolution**：先拋謎題/矛盾 → 視覺探索 → 揭示原理 → 推廣。
-2. **Build Up**：簡單積木 → 組合成複雜 → 驚喜結果 → 反思。
-3. **Two Perspectives → Unity**：觀點 A（如代數）→ 觀點 B（如幾何）→ 證明是同一件事 → 探索意涵。
-4. **Misconception → Refine → Correct**：先展示常見誤解 → 逐步修正 → 得到正解。
-5. **Specific → General**：具體例子 → 找規律 → 抽象成原則 → 應用到新情境。
-
-最好的說明常混合多種（Mystery hook + Build Up 是最常見組合）。
+1. **拒絕廉價的連續跑馬燈與循環動畫**：
+   - 嚴禁無限循環的閃爍文字、隨機數字洗牌、常駐旋轉光圈。
+   - 動畫僅作為**「因果傳遞」**或**「狀態推進」**的短暫引導（時長 `400ms ~ 800ms`，單次播放即定格）。
+2. **節點懸停透視 (Node Inspection HUD)**：
+   - 右側任何核心方塊（如標頭欄位、金鑰、暫存器、分區），滑鼠懸停時底部的 HUD 即時顯示真實的底層資訊：
+     - **實體位移 (Byte Range)**：如 `0x00..0x03`。
+     - **真實值 / 格式**：如 `Magic: 0x46495445 ("FITE")`。
+     - **工程意義 (Engineering Context)**：該欄位在開機驅動中對應哪一行代碼或哪支函式。
+3. **術語飛出抽屜 (Non-Disruptive Flyout)**：
+   - 點擊內文術語，於畫面側邊彈出專業名詞卡片，包含：
+     - 白話直覺解釋。
+     - 具體實作程式碼路徑（例如：`sercomm-bl.patch` / `board_secure_fit.c`）。
+     - 💡 **核心價值 (Why it matters)**。
 
 ---
 
-## 7. Reveal 順序與節奏（圖要「長出來」）
+## 5. 離線自含交付規範 (100% Offline-First)
 
-1. **容器/區域**先出現（淡），建立框架。
-2. **節點**依閱讀/邏輯順序出現（scale 0.8→1 + fade）。
-3. **連線（edges）**在節點就定位後畫出。
-4. **標籤**最後淡入。
-5. **高亮掃過**當前路徑，其餘 dim 到 ~0.35。
-
-每個有意義的步停留 **0.5–1.5s**；若配旁白，則 gate 在旁白上，不要用固定計時器。
+- 交付必須是單一 `.html` 檔案或標準多檔純靜態資源。
+- 零外部 CDN（無 Tailwind/Bootstrap/Google Fonts 遠端依賴）。
+- `file://` 本地直接雙擊秒開，字型依賴作業系統原生高品質無襯線體（`-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft JhengHei"`）。
 
 ---
 
-## 8. 動畫 cue 詞彙（story DSL，可直接當 beat 指令）
+## 6. 品質自檢清單 (Pre-Delivery Checklist)
 
-| cue | 作用 |
-|---|---|
-| `dim *` | 開場前先把全部視覺權重壓低 |
-| `activate <id>` | 強調某節點 |
-| `flow a -> b` | 追一條/多條連線的資料流 |
-| `pulse <id> for 1s` | 在決策/狀態上停一下注意力 |
-| `wait 250ms` | 刻意停頓 |
-| `loop` | 最後一 cue 後重播 |
-
-單次移動要「長到能看懂、短到不必等」。
-
----
-
-## 9. 視覺身份（premium textbook，不是 flowchart）
-
-- 深色主題 + 高對比 accent。
-- 等寬字型放資料/hex；無襯線放標籤。
-- **顏色即語意**，開頭就給 legend：input（藍）、key（琥珀）、output（綠）、中間態（紫）、危險/竄改（紅）。
-- **空間即關係**：左右 = 轉換/時間/因果；上下 = 階層/推導；中心 = 焦點；周邊 = 脈絡。
-- 深度分層：陰影/漸層區隔概念層。
-- 過場 300–500ms；hover 150ms。
-- 每個「活」控制都對應一個 state model，readout 跟著同一個 state 走。
-
----
-
-## 10. 教學原則（讓內容真的被學會）
-
-- **先 Show → 再 Tell → 最後揭名詞**。
-- **一次只教一件事**：每步 = 一個新概念 + 一個動畫，其餘淡化。
-- **Mayer**：去冗餘、標重點、分段由讀者控制、先教名詞、口語化。
-- **逆向設計**：先想「讀者看完能做/說出什麼」，再設計步驟。
-- **Worked example → Faded guidance**：示範（帶 subgoal label）→ 拆鷹架動手 → 獨立操作。
-- **檢索練習**：偶爾讓讀者回想（互動小問）。
-
----
-
-## 11. Scenes & Beats + Living Diagram（活圖）
-
-- `scene` = 一個故事；`beat` = 一個瞬間（某 edge 動了、某資料塊出現、某 caption）。
-- 一個檔案只放 1–2 個 scene，loop 很快轉回來。
-- **用真實資料**；每個 label/caption 必須對得上實際行為。
-- **Living diagram 進階互動**：
-  - hover/tab 到某部分 → 焦點光罩亮起它與它的連線 + 一張說明卡。
-  - 轉旋鈕（knob）→ 讀數即時回答（改變參數看結果）。
-  - 可深連結狀態（`#step=…&param=…`），分享「我看到的那個畫面」。
-  - 未被觸碰時放一小段導覽，任何觸碰即停；reduced-motion 顯示靜態（輸入仍可動）。
-- 交付前「親眼看」：render 出來截圖每個 beat，確認無文字溢出、箭頭穿過方塊、caption 與動作不符。
-
----
-
-## 12. 離線優先技術棧（零外部依賴）
-
-- 純 HTML + CSS + Vanilla JS，**不用 ES Module**（`file://` 會被 CORS 擋）。
-- 內嵌 SVG；動畫用 `requestAnimationFrame` + 本地 easing + `stroke-dashoffset` / `animateMotion`。
-- 資料用 JS 全域物件，**不要 `fetch()` 本地 JSON**。
-- 音效用 WebAudio 合成（無音檔）。
-- 一份檔案：瀏覽器就能跑、能縮放、能離線。
-
----
-
-## 13. Anti-Patterns（違反即重做）
-
-- ❌ 靜態 flowchart 無互動
-- ❌ 一大段文字講演算法（圖本身就是說明）
-- ❌ 只靠 tooltip 傳遞關鍵資訊
-- ❌ 與真實資料轉換無關的裝飾動畫
-- ❌ 無限循環、常駐閃爍
-- ❌ 淡出再淡入取代「變形」（斷了視覺連續性）
-- ❌ 淺色黯淡粉彩
-- ❌ 跳過 Stage 分解
-- ❌ 塞進產品名/客戶名/型號等不相干細節
-
----
-
-## 14. 品質檢查清單（交付前逐項勾）
-
-- [ ] 有明確 Aha moment
-- [ ] 已分解成 Stage，每 stage 有可見輸入/輸出
-- [ ] 格式選對（HTML+SVG / Mermaid / d3）
-- [ ] Step 控制（前/後/播放/暫停/速度）
-- [ ] 至少一個即時輸入欄位
-- [ ] Hover 檢查（raw data / hex / 解釋）
-- [ ] 每步 1–2 句白話說明
-- [ ] 顏色 legend 開頭就有
-- [ ] Reveal 順序正確（容器→節點→邊→標籤→高亮，其餘 dim 0.35）
-- [ ] 動畫都對應真實變化、可定格、尊重 reduced-motion
-- [ ] 用了至少一種敘事模式
-- [ ] 深色主題、語意色一致
-- [ ] 離線可開、無 CDN、無 fetch、無音檔
-- [ ] 親眼看過每個 beat，無溢出/錯位/不符
-
----
-
-## 15. 通用語意色（可微調，但全篇一致）
-
-| 語意 | 建議色 | 用途 |
-|---|---|---|
-| 輸入 / 明文 | `#06B6D4` 青 | 原始資料 |
-| 金鑰 / 憑證 | `#F59E0B` 琥珀 | 秘密材料 |
-| 輸出 / 密文 | `#10B981` 翡翠 | 結果 |
-| 中間態 / 處理 | `#8B5CF6` 紫 | 暫存/推導 |
-| 危險 / 竄改 | `#F43F5E` 玫瑰 | 失敗/被改 |
-| 背景 | `#0B0F19` 深灰 | 畫布 |
+- [ ] **視覺風格**：是否為專業白底/淺灰工程手冊風格？（非黑底霓虹玩具風）
+- [ ] **字級與行高**：左側說明內文是否不小於 14.5px（推薦 15.5-16px）？行高是否達到 1.8？
+- [ ] **SVG 文字截斷排查（必查）**：
+  - 檢查所有卡片內次要說明與處置方案是否超出卡片右邊界？
+  - 超過 15 個中文字或 30 個英文字元的字串，是否已使用 `lines: [...]` 拆為多行？
+  - 卡片高度 `h` 是否隨多行文字相應擴大？（防文字被下底線切掉）
+- [ ] **連線遮擋檢查**：SVG 連接線是否僅穿行於通道留白處？無任何線條貫穿文字卡片？
+- [ ] **二進制與 Hex 排版**：位元組分佈區塊寬度是否足以容納文字，無重疊或擠壓？
+- [ ] **互動穩定性**：左右鍵切換、點選 Tab、點選術語、懸停 HUD 是否全部運作正常？
+- [ ] **真實工程代碼對齊**：所有金鑰名稱、標頭 Offset、腳本名稱是否 100% 吻合真實 codebase？
+- [ ] **零外部依賴**：中斷網路後，本地雙擊檔案能否 100% 完美呈現？
