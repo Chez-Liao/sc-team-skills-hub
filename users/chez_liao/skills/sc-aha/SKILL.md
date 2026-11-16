@@ -1,124 +1,217 @@
 ---
-name: sc-aha
+name: aha
 description: >-
-  Turn any complex technical knowledge, architecture, protocol, or firmware mechanism
-  into a vivid, highly legible, interactive engineering explainer. Optimized for human
-  engineers and non-specialists. Produces clean, professional, white/light-themed
-  engineering documents (Stripe/Cloudflare/Apple tech-spec aesthetic) with zero-overlap
-  SVG diagrams, comfortable typography, hover inspection, step controls, and live interactive
-  sandboxes. Strict anti-occlusion and offline-first standards.
+  Turn any complex technical knowledge, architecture, protocol, algorithm, or firmware
+  mechanism into a vivid, highly legible, interactive engineering explainer. Driven by
+  a 3-role collaborative pipeline (Technical Advisor -> Editor-in-Chief -> Director)
+  distilling Feynman Technique, Explorable Explanations, and Stripe/Apple-grade visual
+  engineering. Strict anti-occlusion, rich pedagogy, and 100% offline-first standards.
 ---
 
-# Aha — 把專業工程知識轉化為清晰易讀的互動說明
+# Aha — Transforming Complex Engineering Knowledge into Intuitive Interactive Explainers
 
-一套專門為**非該領域專家或初階工程師**打造的技術視覺化與概念解析方法論。
-核心目標：**「不靠死記名詞，透過直覺互動與清晰排版，5 分鐘內看懂底層真相。」**
+A methodology and production pipeline designed for **non-domain experts and junior engineers**.
+Core Mission: **"Understand the underlying engineering truth within 5 minutes through intuitive interaction, mental models, and crystal-clear layout—without rote memorization."**
+
+To ensure every explainer achieves uncompromising **technical precision**, **pedagogical clarity**, and **world-class interactive design**, the agent operates through a structured **Three-Role Collaborative Pipeline**:
+
+```
+┌─────────────────────────┐     ┌─────────────────────────┐     ┌─────────────────────────┐
+│  1. Technical Advisor   │     │   2. Editor-in-Chief    │     │      3. Director        │
+│    (Domain Specialist)  │ ──> │  (Pedagogical Narrative)│ ──> │ (Interactive Visualizer)│
+│                         │     │                         │     │                         │
+│ • First-principles truth│     │ • Feynman simplification│     │ • Stripe/Apple aesthetic│
+│ • Gap & friction audit  │     │ • Progressive disclosure│     │ • Zero-overlap SVG      │
+│ • Clarification loop    │     │ • Reader's test variable│     │ • State machine & motion│
+└─────────────────────────┘     └─────────────────────────┘     └─────────────────────────┘
+```
 
 ---
 
-## 1. 核心視覺與排版規範 (Design & Typography Overhaul)
+## 1. The Three-Role Collaborative Pipeline
 
-### 1.1 摒棄「黑底 AI 玩具感」，轉向「頂級白底專業工程手冊風格」
-- ❌ **嚴禁預設純黑/深藍發光底色（如 `#0B0F19`）**：深色霓虹主題容易產生廉價 AI 生成感，且在長篇文字閱讀時容易產生視覺疲勞。
-- ✅ **全面採用專業工程白底/淺灰風格（Stripe / Cloudflare / Apple Developer 規格）**：
-  - **頁面底色**：乾淨純白 `#FFFFFF`，搭配極淺工程灰底 `#F8FAFC` 作為區塊與畫布襯底。
-  - **邊框與格線**：高質感工程淺灰線條 `#E2E8F0` 或 `#CBD5E1`，線寬 `1px` 到 `1.5px`。
-  - **文字主色**：深灰墨黑 `#0F172A`（Slate-900，提供極致銳利的閱讀對比度，嚴禁使用刺眼純黑 `#000000`）。
-  - **說明輔助色**：沉穩灰 `#475569`（Slate-600）與 `#64748B`。
+### Role 1: Technical Advisor (Domain Specialist & Truth Anchor)
+> **Distilled Principles**: *First-Principles Thinking*, *Feynman Understanding Audit*, *Socratic Clarification Loop*
 
-### 1.2 防遮擋與排版安全鐵律 (Strict Anti-Occlusion & Overflow Standards)
-- **SVG 原生文字不具備自動換行能力（根因預警）**：
-  - SVG 的 `<text>` 標籤若無特定處理，遇到長文字絕對會沿著 X 軸無限延伸，穿透卡片邊界被右側截斷！
-  - **核心解法 1（多行陣列模式）**：卡片渲染函數必須原生支援 `lines: ["第一行...", "第二行..."]`，每行獨立計算 y 軸增量（字級 12.5px 時建議行距 `idx * 20px ~ 22px`）。
-  - **核心解法 2（自動估算與語意拆行）**：若傳入單一長字串 `sub`，必須依據卡片可用寬度（`width - 32px padding`）計算字元容量。中文每字約佔 13px，超過容量必須自動斷句為多行，或改用 `foreignObject` 包裹 HTML 容器進行 `word-break: break-word`。
-- **元件間距與通道走線**：
-  - SVG 方塊與節點內部必須預留充足 Padding（水平至少 16px，垂直至少 14px）。
-  - 子卡片（Nested Box）與父容器邊界的間距不得小於 14px，高度必須為多行文字留出動態擴充空間（每增加一行文字，高度 `h` 至少增加 24px）。
-  - 箭頭連接線（Connectors）必須沿著元件間隔的「空白通道」走，嚴禁橫穿任何文字、卡片或標籤中心。
-- **字體層次與極致易讀性**：
-  - **章節大標題**：`22px ~ 26px`，`font-weight: 800`，深色墨黑 `#0F172A`。
-  - **正文說明文字**：**嚴禁小於 14.5px**，建議主內文設定為 **`15.5px ~ 16px`**，行高（`line-height`）維持舒適的 `1.8 ~ 1.85`。
-  - **圖表節點標題**：`14px ~ 15px`，`font-weight: 700`；節點次要說明與內文不低於 `12.5px`。
-  - **二進制 / Hex / Offset 標記**：統一使用清晰等寬字型（`ui-monospace, Consolas, Menlo`），字級 `12px ~ 13px`，搭配淺黃/淺灰膠囊底襯。
+The Technical Advisor is the gatekeeper of technical reality. Hallucination, hand-waving, superficial summaries, and unverified assumptions are strictly prohibited.
 
-### 1.3 專業工程語意配色表 (Light Theme Semantics)
+#### Core Responsibilities
+1. **Deconstruct the Technical Truth**:
+   - Deep-read all provided technical artifacts (source code, architecture docs, RFCs, specification sheets, packet dumps, state machine logs).
+   - Trace causal dependency chains: identify exact triggers, preconditions, state mutations, and hardware/runtime boundaries (e.g., memory layouts, timing constraints, encryption boundaries, network round-trips).
+2. **Perform the Friction & Gap Diagnosis (Feynman Audit)**:
+   - Identify counter-intuitive mechanisms: What is the hardest part to grasp? Where do people typically build wrong mental models?
+   - Unmask jargon and black boxes: Convert opaque domain terms into concrete mechanical mechanisms.
+3. **The Socratic Clarification Loop (Clarify Before Assuming)**:
+   - If the user's input lacks critical details, contains ambiguities, or omits error boundaries (e.g., missing key generation origin, undefined rollback steps, ambiguous byte offsets, or unspecified timeout behaviors):
+   - **The Technical Advisor must proactively pause and ask targeted, structured questions to the user** to solidify the facts before advancing to narrative design.
 
-| 語意角色 | 推薦色彩 | 淺底背景色 (10%~15% Opacity) | 適用對象 |
+#### Deliverable: *Technical Truth & Deconstruction Factsheet*
+- **Causal Flow & State Transitions**: Exact step-by-step triggers and consequences.
+- **Cognitive Bottlenecks**: The 2–3 hardest concepts and why they feel counter-intuitive.
+- **Boundary & Failure Matrix**: Edge cases, invalid inputs, failure recoveries, and physical limits.
+- **Jargon-to-Reality Dictionary**: Industry buzzwords mapped to actual runtime behaviors and data structures.
+
+---
+
+### Role 2: Editor-in-Chief (Pedagogical Narrative Architect)
+> **Distilled Principles**: *Bret Victor's Explorable Explanations*, *Instructional Design*, *Cognitive Load Theory*, *Progressive Disclosure*
+
+The Editor-in-Chief translates dense technical truth into a frictionless learning journey. **Directly copying and pasting technical specifications is forbidden.**
+The Editor asks: *"How can someone with zero domain background read this and experience a genuine 'Aha!' moment within minutes?"*
+
+#### Core Responsibilities
+1. **Define the Single "Aha Moment"**:
+   - Every topic must isolate its single most illuminating breakthrough insight (e.g., *"Why two-tier key wrapping? Because the master root key never leaves hardware storage, while ephemeral session keys are freely generated and discarded per session."*).
+2. **Construct Mental Models & Intuitive Analogies**:
+   - Build relatable real-world analogies (e.g., dual-custody safe deposit boxes, airport pre-clearance security stamps, assembly line quality gates).
+   - Ensure the analogy holds up under scrutiny and does not introduce misleading assumptions.
+3. **Design the 5-Step Escalation Ladder**:
+   - **Step 0: The Core Problem (Pain Point)**: What catastrophic failure occurs without this mechanism? (Data tampering, privilege escalation, memory leaks, system deadlock?)
+   - **Step 1: The Intuitive Analogy**: Ground the concept in everyday logic.
+   - **Step 2: Structural Deconstruction**: Strip away the analogy and reveal the engineering skeleton progressively.
+   - **Step 3: Attack & Failure Scenarios**: Challenge the system (What happens if a byte is flipped? What if power is cut midway?).
+   - **Step 4: Ground Truth**: Connect directly to real-world binary layouts, API contracts, offsets, or source logic.
+4. **Determine "The Parameter in the Reader's Hand"**:
+   - Isolate the single most educational interactive variable that the reader can manipulate to observe cause-and-effect (e.g., toggle an integrity flag, adjust payload size slider, inject an invalid signature).
+
+#### Deliverable: *Pedagogical Storyboard & Stage Script*
+- **Left Column Lecture & Guidance**: Clear, mentor-like prose with comfortable typography.
+- **Exploration Goal**: A crisp instruction telling the reader what to interact with and what outcome to look for.
+- **Aha Callout Box**: A highlighted callout encapsulating the core realization of each stage.
+
+---
+
+### Role 3: Interactive Director (Visual Choreographer & Motion Engineer)
+> **Distilled Principles**: *Apple & Stripe Engineering Tech-Spec Aesthetics*, *ByteByteGo Architecture Infographics*, *Meaningful Micro-motion*, *Corridor Routing & Zero-Overlap SVG*
+
+The Director brings the Editor's script to life as a high-precision, interactive visual laboratory.
+
+#### Core Responsibilities
+1. **Execute Modern Engineering Aesthetics**:
+   - Strictly adhere to clean, crisp, professional white/light-slate canvas themes (Stripe/Apple standard). Reject cheap dark-neon "AI demo" styling.
+2. **Enforce SVG Anti-Occlusion & Corridor Routing**:
+   - Strictly prevent text truncation and wire-crossing over text cards.
+3. **Choreograph Meaningful Micro-Motion**:
+   - Animation must only serve as **causal demonstration** or **state transition** (400ms–800ms ease, single play then settle). Zero infinite spinning spinners or chaotic continuous loops.
+4. **Implement Sandbox State Machines & Inspection HUD**:
+   - Build active controls for the reader's variable (sliders, toggle pills, step buttons).
+   - Integrate a floating Node Inspection HUD displaying byte ranges, real values, and code context upon hover.
+5. **Guarantee 100% Offline-First Self-Containment**:
+   - Single standalone `.html` bundle with zero external CDN dependencies. Instant double-click launch via `file://`.
+
+#### Deliverable: *Self-Contained Interactive Explainer HTML Bundle*
+
+---
+
+## 2. Visual & Typographic Standards
+
+### 2.1 Modern Engineering White Theme (No Neon Dark Mode)
+- ❌ **Forbidden**: Default pitch-black or glowing dark navy backgrounds (e.g., `#0B0F19` with neon borders). They cause visual fatigue during long technical readings and evoke disposable AI toy vibes.
+- ✅ **Required**: Clean, professional engineering light palette (Apple Developer / Stripe documentation style):
+  - **Page Background**: Pure crisp white `#FFFFFF`, paired with soft technical canvas grey `#F8FAFC`.
+  - **Borders & Dividers**: High-precision slate line art `#E2E8F0` or `#CBD5E1`, width `1px` to `1.5px`.
+  - **Primary Text**: Deep slate ink `#0F172A` (Slate-900) for maximum contrast without harsh pure black glare.
+  - **Secondary & Meta Text**: Balanced muted slate `#475569` (Slate-600) and `#64748B`.
+
+### 2.2 Strict Anti-Occlusion & Overflow Standards
+- **SVG Text Wrapping Vulnerability**:
+  - Native SVG `<text>` elements **never wrap automatically**. Unhandled long strings will expand along the X-axis indefinitely, puncturing card boundaries and clipping off-screen.
+  - **Solution 1 (Multi-line Array Pattern)**: Card rendering functions must natively accept multi-line arrays: `lines: ["Line one...", "Line two..."]`, calculating dynamic Y-offsets per line (`idx * 20px ~ 22px`).
+  - **Solution 2 (Dynamic Semantic Chunking)**: For dynamic single strings, compute available width (`cardWidth - 32px padding`). Wrap text automatically or embed HTML via `<foreignObject>` with `word-break: break-word`.
+- **Card Padding & Corridor Routing**:
+  - Node boxes must maintain generous internal padding (min 16px horizontal, 14px vertical).
+  - Nested container margin must be at least 14px. Expand container height dynamically by at least 24px per additional text line.
+  - Connector paths (Arrows/Beziers) must travel strictly through **empty boundary corridors**. Never allow a line to pierce through the body of another card or label.
+- **Typographic Hierarchy**:
+  - **Section Titles**: `22px ~ 26px`, `font-weight: 800`, deep slate `#0F172A`.
+  - **Body Prose**: **Never smaller than 14.5px**, recommended **`15.5px ~ 16px`**, comfortable line-height `1.8 ~ 1.85`.
+  - **Diagram Node Titles**: `14px ~ 15px`, `font-weight: 700`; secondary captions not below `12.5px`.
+  - **Offsets / Hex / Hashes**: Distinct monospace font stack (`ui-monospace, Consolas, "SF Mono", Menlo`), `12px ~ 13px`, wrapped in pill containers with light amber or slate tinted backgrounds.
+
+### 2.3 Semantic Color Palette (Light Theme)
+
+| Semantic Role | Accent Color | Soft Tint Background (10%–15% Opacity) | Typical Target Entities |
 |---|---|---|---|
-| **明文 / 輸入 (Input)** | `#0284C7` (Sky-600) | `#E0F2FE` (Sky-100) | 原始程式碼、明文 Device Tree、輸入資料 |
-| **金鑰 / KEK (Secret)** | `#D97706` (Amber-600) | `#FEF3C7` (Amber-100) | a2k3、AES-256 密鑰、DEK、加密參數 |
-| **密文 / 輸出 (Cipher)** | `#059669` (Emerald-600) | `#D1FAE5` (Emerald-100) | 密文映像檔、rootfs.enc、FITE 密文塊 |
-| **簽章 / 信任根 (Sign)** | `#7C3AED` (Purple-600) | `#EDE9FE` (Purple-100) | r4k1、RSA 數位簽章、Certificate、ROT |
-| **硬體根 / 警告 (Root/Fail)**| `#E11D48` (Rose-600) | `#FFE4E6` (Rose-100) | CPU OTP、HUK、驗證失敗、Kernel Panic |
-| **結構容器 / 分區** | `#64748B` (Slate-500) | `#F1F5F9` (Slate-100) | eMMC 分割區、RPMB SKS 庫、SoC 邊界 |
+| **Input / Plaintext** | `#0284C7` (Sky-600) | `#E0F2FE` (Sky-100) | Source payloads, raw data, schema definitions, input parameters |
+| **Secret / Key / Config** | `#D97706` (Amber-600) | `#FEF3C7` (Amber-100) | Master keys, encryption keys, private credentials, critical state |
+| **Encrypted / Output** | `#059669` (Emerald-600) | `#D1FAE5` (Emerald-100) | Ciphertext, verified packages, valid digests, safe outputs |
+| **Signature / Trust** | `#7C3AED` (Purple-600) | `#EDE9FE` (Purple-100) | Digital signatures, certificates, root of trust, consensus proofs |
+| **Hardware / Alert** | `#E11D48` (Rose-600) | `#FFE4E6` (Rose-100) | Hardware root, OTP fuses, validation failures, emergency stops |
+| **Structural / Boundary** | `#64748B` (Slate-500) | `#F1F5F9` (Slate-100) | Storage partitions, memory boundaries, process isolation walls |
 
 ---
 
-## 2. 知識傳遞原則：The "Aha Moment"（頓悟瞬間）
-
-每個技術主題必須鎖定**一個最核心的頓悟點**，寫碼前先定位：
-- **為什麼需要兩層加密？** ➔ 看見「根金鑰 a2k3 永遠不出門，每版隨機拋棄 DEK」的隔離保護。
-- **為什麼要簽兩次？** ➔ 看到「第一次防明文邏輯被改，第二次讓開機在不解密前提下直接先篩掉惡意密文」。
-- **為什麼換 CPU 會開機失敗？** ➔ 看到「CPU HUK 變更導致 eMMC RPMB 認證 HMAC 不符，金鑰庫無法開啟」。
-
----
-
-## 3. 版面架構：雙欄專業技術手冊佈局
+## 3. Layout Architecture: Dual-Pane Technical Handbook
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
-│ HEADER: 專案標題 · 專業徽章 · 顏色語意圖例 (Legend)                      │
+│ HEADER: Project Title · Professional Badges · Semantic Color Legend    │
 ├────────────────────────────────────────────────────────────────────────┤
-│ NAV: 模組切換標籤 (Tab Navigation, 淺灰底 + 圓角選中態)                  │
+│ NAV: Stage Tabs (Interactive Stepper, Soft Grey Pills + Active State)   │
 ├──────────────────────────────┬─────────────────────────────────────────┤
-│ 左欄：教材與原理解析 (35% ~ 38%)│ 右欄：高精度 SVG 互動實驗室 (62% ~ 65%)    │
-│ • 當前階段編號與標題         │ • 大畫布 (960x560 以上)，元素間距寬鬆    │
-│ • Aha 頓悟核心提示框         │ • 容器 ➔ 節點 ➔ 連線 錯落有致，嚴禁穿線 │
-│ • 易讀正文 (15px/1.8行高)    │ • 互動式元件：可點擊、可切換狀態         │
-│ • 關鍵術語點擊彈出說明       │ • 懸停高亮：主動突顯關聯路徑             │
-│ • 底部控制：上一步/下一步    ├─────────────────────────────────────────┤
-│                              │ 底部 HUD：浮動節點檢測儀 (Byte Offset)   │
+│ LEFT PANE: Pedagogical Guide │ RIGHT PANE: Interactive High-Precision   │
+│ (35% ~ 38% Width)            │ Visual Lab (62% ~ 65% Width)            │
+│ • Stage Number & Title       │ • Generous SVG Canvas (960x560+),       │
+│ • 💡 Core "Aha Moment" Box   │   ample breathing space                 │
+│ • Rich Prose (15.5px / 1.8)  │ • Containers ➔ Nodes ➔ Corridor Arrows  │
+│ • Clickable Term Flyouts     │ • The Reader's Variable Controller      │
+│ • Step Navigation Buttons    │ • Hover Causal Path Highlighting        │
+│                              ├─────────────────────────────────────────┤
+│                              │ BOTTOM HUD: Live Node Inspector         │
+│                              │ (Byte Range, Value, Engineering Context)│
 └──────────────────────────────┴─────────────────────────────────────────┘
 ```
 
 ---
 
-## 4. 動態與互動鐵律 (Interactive & Motion Standards)
+## 4. Interactive & Motion Standards
 
-1. **拒絕廉價的連續跑馬燈與循環動畫**：
-   - 嚴禁無限循環的閃爍文字、隨機數字洗牌、常駐旋轉光圈。
-   - 動畫僅作為**「因果傳遞」**或**「狀態推進」**的短暫引導（時長 `400ms ~ 800ms`，單次播放即定格）。
-2. **節點懸停透視 (Node Inspection HUD)**：
-   - 右側任何核心方塊（如標頭欄位、金鑰、暫存器、分區），滑鼠懸停時底部的 HUD 即時顯示真實的底層資訊：
-     - **實體位移 (Byte Range)**：如 `0x00..0x03`。
-     - **真實值 / 格式**：如 `Magic: 0x46495445 ("FITE")`。
-     - **工程意義 (Engineering Context)**：該欄位在開機驅動中對應哪一行代碼或哪支函式。
-3. **術語飛出抽屜 (Non-Disruptive Flyout)**：
-   - 點擊內文術語，於畫面側邊彈出專業名詞卡片，包含：
-     - 白話直覺解釋。
-     - 具體實作程式碼路徑（例如：`sercomm-bl.patch` / `board_secure_fit.c`）。
-     - 💡 **核心價值 (Why it matters)**。
-
----
-
-## 5. 離線自含交付規範 (100% Offline-First)
-
-- 交付必須是單一 `.html` 檔案或標準多檔純靜態資源。
-- 零外部 CDN（無 Tailwind/Bootstrap/Google Fonts 遠端依賴）。
-- `file://` 本地直接雙擊秒開，字型依賴作業系統原生高品質無襯線體（`-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft JhengHei"`）。
+1. **Meaningful State Transitions (No Gratuitous Loops)**:
+   - Zero distracting infinite ticker text or pointless rotating rings.
+   - Animations trigger only upon **stage switches**, **user control adjustments**, or **inspection hover** (`400ms ~ 800ms` duration, settle firmly once completed).
+2. **Live Node Inspection HUD (Bottom Bar)**:
+   - Hovering over any diagram element (header field, key container, register, partition) immediately populates the bottom HUD:
+     - **Offset / Scope**: e.g., `0x0000..0x001F (32 Bytes)` or `Header Offset + 12`.
+     - **Current Value / Format**: e.g., `Magic: 0x46495445 ("FITE")` or `SHA-256 Digest`.
+     - **Engineering Rationale**: What code path or hardware register evaluates this field.
+3. **Term Flyout Drawers**:
+   - Clicking marked technical terms inside the left pane opens a neat side card containing:
+     - Plain-language intuition.
+     - Concrete reference path or specification clause.
+     - 💡 **Why it matters (The engineering trade-off)**.
+4. **The Reader's Interactive Controls**:
+   - Provide concrete controls (e.g., slider to vary payload size, toggle to simulate invalid signatures or corrupted blocks).
+   - Changing the control immediately triggers reactive visual updates on the SVG stage: valid paths illuminate in green, broken states turn rose-red, and the HUD explains the exact line of logic that failed.
 
 ---
 
-## 6. 品質自檢清單 (Pre-Delivery Checklist)
+## 5. Offline-First Deliverable Specifications
 
-- [ ] **視覺風格**：是否為專業白底/淺灰工程手冊風格？（非黑底霓虹玩具風）
-- [ ] **字級與行高**：左側說明內文是否不小於 14.5px（推薦 15.5-16px）？行高是否達到 1.8？
-- [ ] **SVG 文字截斷排查（必查）**：
-  - 檢查所有卡片內次要說明與處置方案是否超出卡片右邊界？
-  - 超過 15 個中文字或 30 個英文字元的字串，是否已使用 `lines: [...]` 拆為多行？
-  - 卡片高度 `h` 是否隨多行文字相應擴大？（防文字被下底線切掉）
-- [ ] **連線遮擋檢查**：SVG 連接線是否僅穿行於通道留白處？無任何線條貫穿文字卡片？
-- [ ] **二進制與 Hex 排版**：位元組分佈區塊寬度是否足以容納文字，無重疊或擠壓？
-- [ ] **互動穩定性**：左右鍵切換、點選 Tab、點選術語、懸停 HUD 是否全部運作正常？
-- [ ] **真實工程代碼對齊**：所有金鑰名稱、標頭 Offset、腳本名稱是否 100% 吻合真實 codebase？
-- [ ] **零外部依賴**：中斷網路後，本地雙擊檔案能否 100% 完美呈現？
+- **Format**: Delivered as a single standalone `.html` file.
+- **Zero External Dependencies**: Strictly no external CDN references (no Tailwind, Bootstrap, Google Fonts, or external scripts).
+- **Universal Local Compatibility**: Launches instantly via `file://` protocol in any standard browser. Uses OS-native high-legibility sans-serif stacks (`-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif`).
+
+---
+
+## 6. Pre-Delivery Three-Role Checklist
+
+### Technical Advisor Check
+- [ ] **Clarification Loop Executed**: Were ambiguous or missing requirements asked and clarified with the user before building?
+- [ ] **Real Engineering Alignment**: Are offsets, data structures, algorithms, and protocols 100% faithful to authentic technical reality?
+- [ ] **Physical & Security Boundaries**: Are failure recovery, error paths, and resource boundaries clearly articulated?
+
+### Editor-in-Chief Check
+- [ ] **Definite Aha Moment**: Is there an unmistakable, illuminating core insight that anchors the whole explanation?
+- [ ] **Pedagogical Translation**: Is the guide written as an engaging, structured masterclass rather than a dry specification dump?
+- [ ] **Typography & Comfort**: Is body font size ≥ 14.5px (recommended 15.5–16px) with line-height ≥ 1.8?
+- [ ] **Active Reader Variable**: Does the reader have a clear parameter to manipulate and observe cause-and-effect?
+
+### Interactive Director Check
+- [ ] **Visual Theme**: Is the canvas clean white/light slate with sharp typography? (Zero dark-neon clutter)
+- [ ] **SVG Overflow Prevention (Crucial)**:
+  - Are long labels and descriptions broken into multi-line arrays (`lines: [...]`)?
+  - Do card heights (`h`) dynamically expand to prevent text running off the bottom border?
+- [ ] **Corridor Routing**: Are all arrows routed through clear gutters without slicing through text or cards?
+- [ ] **Interactive Responsiveness**: Do tab switches, sliders, hover HUD, and term flyouts work smoothly without console errors?
+- [ ] **100% Offline Integrity**: Does the file render and behave perfectly with the network completely disconnected?
