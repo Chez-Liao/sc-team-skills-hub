@@ -1,4 +1,4 @@
-# joanne_wang 啟用技能清單 (Version: 1.0.1794815871)
+# joanne_wang 啟用技能清單 (Version: 1.0.1794897816)
 
 - `how-to-use-sc-team-skills`: How to Use SC Team Skills
 - `internal-general`: Internal General knowledge (Personal Plugin MCP included)
