@@ -1,7 +1,8 @@
-# alice_yu 啟用技能清單 (Version: 1.0.1795510497)
+# alice_yu 啟用技能清單 (Version: 1.0.1795510513)
 
 - `c-cpp-review`: C/C++ Patch Review
 - `how-to-use-sc-team-skills`: How to Use SC Team Skills
+- `sc-aha`: sc-aha
 - `internal-general`: Internal General knowledge (Personal Plugin MCP included)
 - `internal-networking`: Internal Networking knowledge (Personal Plugin MCP included)
 - `internal-security`: Internal Security knowledge (Personal Plugin MCP included)
